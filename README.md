@@ -2,6 +2,9 @@
 
 Hjelpeprosjekt for å komme i gang med **Samtykke i Altinn 3** ved bruk av Bruno.
 
+Før du kommer i gang, les deg opp på guiden til hvordan du skal ta i bruk Samtykke i Altinn 3:
+https://docs.altinn.studio/nb/authorization/getting-started/consent/
+
 Dette prosjektet inneholder ferdige API-forespørsler for å teste samtykkeflyten. For at forespørslene skal fungere mot Maskinporten, må du konfigurere miljøvariabler i Bruno basert på informasjonen fra din integrasjon i Samarbeidsportalen.
 
 ## Konfigurasjon
