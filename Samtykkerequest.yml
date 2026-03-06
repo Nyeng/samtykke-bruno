@@ -48,26 +48,3 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-
-docs: |+
-  From: Person eller virksomhet du skal hente opplysninger til. Org eller Fnr. 
-
-  To: Banken eller den som ber om samtykke for å hente ut opplysninger.
-
-  handledBy  - hvis du utsteder på vegne av noen må denne settes (Rune sjekker opp)
-
-  RequiredDelegator: Dersom eksplisitt person som skal godkjenne. Må være den personen, ikke en som har tilgang til den personen / org etc.
-
-
-  - Dersom du har en liste av consentRights, så må ressursene den peker på i ressursregisteret ha samme template, ellers skal det feile (gi 400 bad request).
-  - Resource er en liste, men støtter egentlig ikke en liste der, kan maks være én.
-
-
-  Fra person:
-  "from": "urn:altinn:person:identifier-no:12904597870"
-    
-  Fra org:
-  "from": "urn:altinn:organization:identifier-no:312483920"
-
-
-
