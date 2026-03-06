@@ -1,0 +1,89 @@
+info:
+  name: Consent Request Token
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://test.maskinporten.no/token
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: urn:ietf:params:oauth:grant-type:jwt-bearer
+      - name: assertion
+        value: "{{jwt}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const crypto = require('crypto');
+        console.log("node version:", process?.versions?.node);
+
+        const kid = bru.getEnvVar("KID");  // uuid der nøkkelen ligger, kan kopieres fra samarbeidsportalen
+        if(!kid){
+          throw new Error("Du må sette en miljøvaraibel med navn kid: kan kopieres fra samarbeidsportalen: https://docs.altinn.studio/nb/correspondence/getting-started/developer-guides/maskinporten/")
+        }
+
+        const header = {
+            "alg": "RS256",
+            "kid": kid 
+        };
+
+        const client_id = bru.getEnvVar("CLIENT_ID");  
+        if(!kid){
+          throw new Error("Du må sette CLIENT_ID: https://docs.altinn.studio/nb/correspondence/getting-started/developer-guides/maskinporten/")
+        }
+
+        const payload = {
+            "aud": "https://test.maskinporten.no/",
+            "scope": "altinn:consentrequests.write altinn:consentrequests.read",
+            "iss": client_id, // clientId til maskinportenklient, kan utledes fra URL i samarbeidsportalen f.eks: https://sjolvbetjening.test.samarbeid.digdir.no/clients/{{clientId}}
+            "iat": Math.floor(Date.now() / 1000),
+            "exp": Math.floor(Date.now() / 1000) + 120,
+        };
+
+        console.log(payload)
+
+        function base64url(input) {
+            return Buffer.from(input).toString('base64')
+                .replace(/\+/g, '-')
+                .replace(/\//g, '_')
+                .replace(/=/g, '');
+        }
+
+        const encodedHeader = base64url(JSON.stringify(header));
+        const encodedPayload = base64url(JSON.stringify(payload));
+        const signatureInput = `${encodedHeader}.${encodedPayload}`;
+
+        // Sørg for at privateKey er satt her
+        const privateKey = bru.getEnvVar("PEM"); // en du lager selv eller får autogenerert på samarbeidsportalen
+        if(!privateKey)
+          {
+            throw new Error('Du må sette miljøvarabel for PEM: \nFiks det her: https://sjolvbetjening.test.samarbeid.digdir.no/clients/ \n-> Nøkler \n-> legg til klient \n-> Få en generert nøkkel: Generer nøkkel \n Kopier og lag Bruno miljøvarabel for "CONSENT_PEM" hvor du lagrer nøkkelen')
+          }
+        const signature = crypto.sign("RSA-SHA256", Buffer.from(signatureInput), privateKey);
+        const encodedSignature = base64url(signature);
+
+        const jwt = `${signatureInput}.${encodedSignature}`;
+        bru.setVar("jwt", jwt);
+        console.log("attempted payload")
+        console.log(jwt)
+    - type: after-response
+      code: |-
+        const responseData = res.body;
+        bru.setVar("recipient_maskinporten_token", responseData.access_token);
+    - type: tests
+      code: |-
+        const token = res.body
+
+        console.log("node version:", process?.versions?.node);
+
+        bru.setEnvVar("bearer_token",token.access_token)
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

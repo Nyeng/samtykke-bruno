@@ -1,0 +1,73 @@
+info:
+  name: Samtykkerequest
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://platform.tt02.altinn.no/accessmanagement/api/v1/enterprise/consentrequests/
+  body:
+    type: json
+    data: |2
+       {
+          "id": "{{$guid}}", // Random GUID, samme som må brukes for å hente samtykke-token
+          "from": "urn:altinn:person:identifier-no:03848999848",
+          "to": "urn:altinn:organization:identifier-no:991825827", // Må matche med org oppgitt i token. HandledBy settes indirekte her for "på vegne"-scenarioer
+      //    "requiredDelegator": "urn:altinn:person:identifier-no:03848999848",
+          "validTo": "2026-03-06T14:35:00.0000000+00:00",
+          "consentRights": [
+            {
+              "action": [
+                "consent"
+              ],
+              "resource": [
+                {
+                  "type": "urn:altinn:resource",
+                  "value": "samtykke-test-vegard" // Må matche med eksisterende ressurs som ligger i ressursregisteret
+                }
+              ],
+              "metaData": {
+                "inntektsaar": "2026"
+              }
+            }
+          ],
+          "redirectUrl": "https://vg.no",
+          "portalViewMode": "show",
+          "requestMessage": {
+            "en": "test",
+            "nb": "bokmål",
+            "nn": "nynorsk"
+          }
+        }
+  auth:
+    type: bearer
+    token: "{{bearer_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |+
+  From: Person eller virksomhet du skal hente opplysninger til. Org eller Fnr. 
+
+  To: Banken eller den som ber om samtykke for å hente ut opplysninger.
+
+  handledBy  - hvis du utsteder på vegne av noen må denne settes (Rune sjekker opp)
+
+  RequiredDelegator: Dersom eksplisitt person som skal godkjenne. Må være den personen, ikke en som har tilgang til den personen / org etc.
+
+
+  - Dersom du har en liste av consentRights, så må ressursene den peker på i ressursregisteret ha samme template, ellers skal det feile (gi 400 bad request).
+  - Resource er en liste, men støtter egentlig ikke en liste der, kan maks være én.
+
+
+  Fra person:
+  "from": "urn:altinn:person:identifier-no:12904597870"
+    
+  Fra org:
+  "from": "urn:altinn:organization:identifier-no:312483920"
+
+
+
