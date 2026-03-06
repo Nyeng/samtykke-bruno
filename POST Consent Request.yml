@@ -1,7 +1,7 @@
 info:
-  name: Samtykkerequest
+  name: POST Consent Request
   type: http
-  seq: 2
+  seq: 1
 
 http:
   method: POST
@@ -14,7 +14,7 @@ http:
           "from": "urn:altinn:person:identifier-no:03848999848",
           "to": "urn:altinn:organization:identifier-no:991825827", // Må matche med org oppgitt i token. HandledBy settes indirekte her for "på vegne"-scenarioer
       //    "requiredDelegator": "urn:altinn:person:identifier-no:03848999848",
-          "validTo": "2026-03-06T14:35:00.0000000+00:00",
+          "validTo": "2027-03-06T14:35:00.0000000+00:00",
           "consentRights": [
             {
               "action": [
