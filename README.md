@@ -7,6 +7,9 @@ https://docs.altinn.studio/nb/authorization/getting-started/consent/
 
 Dette prosjektet inneholder ferdige API-forespørsler for å teste samtykkeflyten. For at forespørslene skal fungere mot Maskinporten, må du konfigurere miljøvariabler i Bruno basert på informasjonen fra din integrasjon i Samarbeidsportalen.
 
+For detaljert veiledning om hvordan du henter disse verdiene og setter opp integrasjonen, se den offisielle dokumentasjonen:
+[Altinn Studio - Maskinporten Developer Guide](https://docs.altinn.studio/nb/correspondence/getting-started/developer-guides/maskinporten/)
+
 ## Konfigurasjon
 
 Du må angi følgende miljøvariabler i Bruno-miljøet ditt for å kunne generere tokens:
@@ -14,9 +17,6 @@ Du må angi følgende miljøvariabler i Bruno-miljøet ditt for å kunne generer
 * **CLIENT_ID**: Din unike identifikator for integrasjonen fra Samarbeidsportalen.
 * **KID**: Key ID for den offentlige nøkkelen som er registrert hos Maskinporten.
 * **PEM**: Din private nøkkel (Private Key) i PEM-format.
-
-For detaljert veiledning om hvordan du henter disse verdiene og setter opp integrasjonen, se den offisielle dokumentasjonen:
-[Altinn Studio - Maskinporten Developer Guide](https://docs.altinn.studio/nb/correspondence/getting-started/developer-guides/maskinporten/)
 
 ## Hvordan bruke prosjektet
 
