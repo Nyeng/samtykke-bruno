@@ -18,6 +18,7 @@ For detaljert veiledning om hvordan du henter disse verdiene og setter opp integ
 ## Hvordan bruke prosjektet
 
 1. Importer mappen i Bruno.
-2. Opprett et nytt miljø (Environment) i Bruno.
-3. Legg til variablene `CLIENT_ID`, `KID`, og `PEM`.
-4. Sørg for at `PEM`-variabelen inneholder hele nøkkelen, inkludert `-----BEGIN PRIVATE KEY-----` og `-----END PRIVATE KEY-----`.
+2. Velg miljø "TT02"
+3. Huk av "developer" mode, ellers får du ikke kjørt bakgrunnsscript. 
+4. Legg til variablene `CLIENT_ID`, `KID`, og `PEM`.
+5. Sørg for at `PEM`-variabelen inneholder hele nøkkelen, inkludert `-----BEGIN PRIVATE KEY-----` og `-----END PRIVATE KEY-----`.
