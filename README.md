@@ -1,4 +1,4 @@
-# samtykke-bruno
+# Bruno - samtykke
 
 Hjelpeprosjekt for å komme i gang med **Samtykke i Altinn 3** ved bruk av Bruno.
 
