@@ -10,7 +10,7 @@ http:
     type: json
     data: |2
        {
-          "id": "{{$guid}}", // Random GUID, samme som må brukes for å hente samtykke-token
+          "id": "{{$guid}}", // GUID, samme id som må brukes for å hente samtykke-token eller samtykkeforespørselen (/GET)
           "from": "urn:altinn:person:identifier-no:03848999848",
           "to": "urn:altinn:organization:identifier-no:991825827", // Må matche med org oppgitt i token. HandledBy settes indirekte her for "på vegne"-scenarioer
       //    "requiredDelegator": "urn:altinn:person:identifier-no:03848999848",
@@ -23,17 +23,17 @@ http:
               "resource": [
                 {
                   "type": "urn:altinn:resource",
-                  "value": "samtykke-test-vegard" // Må matche med eksisterende ressurs som ligger i ressursregisteret
+                  "value": "samtykke-test-vegard" // Må matche med eksisterende ressurs som ligger i ressursregisteret: https://platform.tt02.altinn.no/resourceregistry/api/v1/resource/samtykke-test-vegard Eksempelvis
                 }
               ],
               "metaData": {
-                "inntektsaar": "2026"
+                "inntektsaar": "2026" // Metadata som er angitt på ressurs i ressursregisteret. Se ressurs over for referanse
               }
             }
           ],
-          "redirectUrl": "https://vg.no",
+          "redirectUrl": "https://nrk.no", 
           "portalViewMode": "show",
-          "requestMessage": {
+          "requestMessage": { // Valgfritt
             "en": "test",
             "nb": "bokmål",
             "nn": "nynorsk"
